@@ -1,17 +1,14 @@
 package io.oddgame.jodd.modules.room;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
+import io.oddgame.jodd.commons.BaseEntity;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Room {
-    private ObjectId id;
+public class Room extends BaseEntity {
     private String name;
     private String host;
     private int size;

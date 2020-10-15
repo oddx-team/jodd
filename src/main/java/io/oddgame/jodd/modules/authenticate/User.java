@@ -1,15 +1,14 @@
 package io.oddgame.jodd.modules.authenticate;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
+import io.oddgame.jodd.commons.BaseEntity;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    private ObjectId id;
+@Builder
+public class User extends BaseEntity {
     private String username;
     private String password;
     private String email;
