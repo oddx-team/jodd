@@ -30,7 +30,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         val hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         val newUser = new User(null, username, hashedPassword, email);
         val inserted = userCollection.insertOne(newUser);
-        return Objects.requireNonNull(inserted.getInsertedId()).asString().toString();
+        return Objects.requireNonNull(inserted.getInsertedId()).asObjectId().getValue().toString();
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.jinyframework.core.AbstractRequestBinder.Context;
 import com.jinyframework.core.AbstractRequestBinder.HttpResponse;
 import io.oddgame.jodd.factories.AppFactory;
 import io.oddgame.jodd.factories.ServiceFactory;
-import io.oddgame.jodd.utils.MessageResponse;
 import lombok.AllArgsConstructor;
 import lombok.val;
 
@@ -18,8 +17,7 @@ public class RoomHandler {
         val createRoomReq = gson.fromJson(ctx.getBody(), Room.class);
         val insertedId = roomService.createRoom(
                 createRoomReq.getName(), country, ctx.dataParam("username"), createRoomReq.getSize());
-        return HttpResponse.of(
-                new MessageResponse("Created room: " + insertedId));
+        return HttpResponse.of("Created room: " + insertedId);
     }
 
     public static HttpResponse getRooms(Context ctx) {

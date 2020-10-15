@@ -23,7 +23,7 @@ public class RoomServiceImpl implements RoomService {
                 .size(size).guess(0).status(Status.NOT_STARTED)
                 .build();
         val inserted = roomCollection.insertOne(newRoom);
-        return Objects.requireNonNull(inserted.getInsertedId()).toString();
+        return Objects.requireNonNull(inserted.getInsertedId()).asObjectId().getValue().toString();
     }
 
     @Override
