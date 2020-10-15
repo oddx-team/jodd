@@ -47,6 +47,6 @@ public class OddWebSocket extends WebSocketServer {
 
     @Override
     public void onStart() {
-        log.info("OddWebSocket started successfully");
+        log.info("Started Odd WebSocket Server");
     }
 }

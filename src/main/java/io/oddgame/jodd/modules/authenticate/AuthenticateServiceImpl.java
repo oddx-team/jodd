@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
+import io.oddgame.jodd.exceptions.LogicException;
 import io.oddgame.jodd.factories.AppFactory;
 import lombok.val;
 
@@ -34,9 +35,9 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
-    public String login(String username, String password) throws Exception {
+    public String login(String username, String password) throws LogicException {
         val userToLogin = userCollection.find(eq("username", username)).first();
-        if (userToLogin == null) throw new Exception("Invalid username");
+        if (userToLogin == null) throw new LogicException("Invalid username");
         val result = BCrypt.verifyer().verify(password.toCharArray(), userToLogin.getPassword());
         if (result.verified) {
             val secret = Algorithm.HMAC256("secret");
@@ -48,6 +49,6 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                     .withExpiresAt(expireDate)
                     .sign(secret);
         }
-        throw new Exception("Invalid password");
+        throw new LogicException("Invalid password");
     }
 }
