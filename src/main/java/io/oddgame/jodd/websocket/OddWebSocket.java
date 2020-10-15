@@ -21,7 +21,7 @@ public class OddWebSocket extends WebSocketServer {
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         conn.send("Welcome to the server!");
-        broadcast( "New connection: " + handshake.getResourceDescriptor() );
+        broadcast("New connection: " + handshake.getResourceDescriptor());
         log.info("New connection to " + conn.getRemoteSocketAddress());
     }
 
@@ -36,13 +36,13 @@ public class OddWebSocket extends WebSocketServer {
     }
 
     @Override
-    public void onMessage(WebSocket conn, ByteBuffer message ) {
+    public void onMessage(WebSocket conn, ByteBuffer message) {
         log.info("Received ByteBuffer from " + conn.getRemoteSocketAddress());
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        System.err.println("An error occurred on connection " + conn.getRemoteSocketAddress()  + ":" + ex);
+        System.err.println("An error occurred on connection " + conn.getRemoteSocketAddress() + ":" + ex);
     }
 
     @Override
