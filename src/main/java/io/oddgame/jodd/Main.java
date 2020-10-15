@@ -17,7 +17,7 @@ public class Main {
                 .useTransformer(AppFactory.getRequestTransformer());
         new Thread(OddWebSocket.port(1235)).start();
 
-        server.get("/", JWTMiddleware::jwtMiddleware, ctx -> HttpResponse.of(ctx.dataParam("username")));
+        server.get("/", JWTMiddleware::jwtMiddleware, ctx -> HttpResponse.of(ctx.dataParam("nickname")));
         server.use("/auth", AuthenticateRouter.getRouter());
         server.use("/rooms", RoomRouter.getRouter());
 

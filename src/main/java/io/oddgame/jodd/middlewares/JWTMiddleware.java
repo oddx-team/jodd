@@ -17,8 +17,10 @@ public class JWTMiddleware {
                     .withIssuer("jodd")
                     .build();
             val decoded = verifier.verify(token);
-            val username = decoded.getClaim("username");
-            ctx.setDataParam("username", username.asString());
+            val userId = decoded.getClaim("userid");
+            val nickname = decoded.getClaim("nickname");
+            ctx.setDataParam("userid", userId.asString());
+            ctx.setDataParam("nickname", nickname.asString());
             return HttpResponse.next();
         } catch (Exception e) {
             log.error(e.getMessage(), e);

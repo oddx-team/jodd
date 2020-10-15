@@ -6,8 +6,7 @@ import lombok.val;
 public class AuthenticateRouter {
     public static HttpRouter getRouter() {
         val router = new HttpRouter();
-        router.post("/login", AuthenticateHandler::login);
-        router.post("/signup", AuthenticateHandler::signUp);
+        router.post("/enter", AuthenticateHandler::enterGame);
         return router;
     }
 }

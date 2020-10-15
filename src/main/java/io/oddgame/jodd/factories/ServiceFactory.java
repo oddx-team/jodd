@@ -15,7 +15,6 @@ public class ServiceFactory {
         if (authenticateService == null) {
             authenticateService = new AuthenticateServiceImpl();
         }
-
         return authenticateService;
     }
 
@@ -23,7 +22,6 @@ public class ServiceFactory {
         if (roomService == null) {
             roomService = new RoomServiceImpl();
         }
-
         return roomService;
     }
 }
