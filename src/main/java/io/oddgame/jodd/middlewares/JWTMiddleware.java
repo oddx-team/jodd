@@ -22,7 +22,7 @@ public class JWTMiddleware {
             return HttpResponse.next();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return HttpResponse.reject(e.getMessage());
+            return HttpResponse.reject("Unauthorized").status(401);
         }
     }
 }

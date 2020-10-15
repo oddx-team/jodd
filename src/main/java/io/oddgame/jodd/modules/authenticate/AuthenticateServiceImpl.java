@@ -12,6 +12,7 @@ import lombok.val;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -25,11 +26,11 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
-    public User signUp(String username, String password, String email) {
+    public String signUp(String username, String password, String email) {
         val hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-        val newUser = new User(username, hashedPassword, email);
-        userCollection.insertOne(newUser);
-        return newUser;
+        val newUser = new User(null, username, hashedPassword, email);
+        val inserted = userCollection.insertOne(newUser);
+        return Objects.requireNonNull(inserted.getInsertedId()).asString().toString();
     }
 
     @Override

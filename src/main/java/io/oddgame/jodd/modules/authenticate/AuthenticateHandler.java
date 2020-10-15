@@ -19,19 +19,23 @@ public class AuthenticateHandler {
         try {
             val token = authenticateService.login(loginCreds.username, loginCreds.password);
             ctx.putHeader("Set-Cookie", "token=" + token + "; Max-Age=86400; Path=/; HttpOnly");
-            return HttpResponse.of(new LoginResponse(token));
+            return HttpResponse.of(
+                    new LoginResponse(token));
         } catch (Exception e) {
-            return HttpResponse.of(new ErrorResponse(e.getMessage(), e.getStackTrace())).status(400);
+            return HttpResponse.of(
+                    new ErrorResponse(e.getMessage(), e.getStackTrace())).status(400);
         }
     }
 
     public static HttpResponse signUp(Context ctx) {
         val signUpCreds = gson.fromJson(ctx.getBody(), User.class);
         try {
-            val user = authenticateService.signUp(signUpCreds.getUsername(), signUpCreds.getPassword(), signUpCreds.getEmail());
-            return HttpResponse.of(new MessageResponse("Registered " + user.getUsername()));
+            val insertedId = authenticateService.signUp(signUpCreds.getUsername(), signUpCreds.getPassword(), signUpCreds.getEmail());
+            return HttpResponse.of(
+                    new MessageResponse("Registered ID: " + insertedId));
         } catch (Exception e) {
-            return HttpResponse.of(new ErrorResponse(e.getMessage(), e.getStackTrace())).status(400);
+            return HttpResponse.of(
+                    new ErrorResponse(e.getMessage(), e.getStackTrace())).status(400);
         }
     }
 
