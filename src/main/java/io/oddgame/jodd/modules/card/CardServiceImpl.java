@@ -26,8 +26,8 @@ public class CardServiceImpl implements CardService {
     public List<Card> generateCards(String color, int size) {
         val cards = new ArrayList<Card>();
         cardCollection.aggregate(Arrays.asList(
-            eq("color", color),
-            sample(size)
+                eq("color", color),
+                sample(size)
         )).forEach(cards::add);
         return cards;
     }

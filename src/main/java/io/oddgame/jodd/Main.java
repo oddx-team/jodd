@@ -7,6 +7,7 @@ import io.oddgame.jodd.middlewares.CORSMiddleware;
 import io.oddgame.jodd.middlewares.JWTMiddleware;
 import io.oddgame.jodd.modules.authenticate.AuthenticateRouter;
 import io.oddgame.jodd.modules.card.CardRouter;
+import io.oddgame.jodd.modules.chat.ChatRouter;
 import io.oddgame.jodd.modules.room.RoomRouter;
 import io.oddgame.jodd.websocket.OddWebSocket;
 import lombok.val;
@@ -24,6 +25,7 @@ public class Main {
         server.use("/auth", AuthenticateRouter.getRouter());
         server.use("/rooms", RoomRouter.getRouter());
         server.use("/cards", CardRouter.getRouter());
+        server.use("/chats", ChatRouter.getRouter());
 
         server.start();
     }
