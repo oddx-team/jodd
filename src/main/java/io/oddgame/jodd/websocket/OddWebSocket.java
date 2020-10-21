@@ -1,5 +1,7 @@
 package io.oddgame.jodd.websocket;
 
+import io.oddgame.jodd.factories.ServiceFactory;
+import io.oddgame.jodd.modules.chat.ChatService;
 import io.oddgame.jodd.utils.JWTUtils;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -17,10 +19,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class OddWebSocket extends WebSocketServer {
     private final Map<String, Collection<WebSocket>> rooms = new HashMap<>();
+
+    private final ChatService chatService = ServiceFactory.getChatService();
 
     private OddWebSocket(final int port) {
         super(new InetSocketAddress("localhost", port));
@@ -95,8 +100,11 @@ public class OddWebSocket extends WebSocketServer {
         switch (topic) {
             case "message":
                 if (attachment.getInRoom() == null) {
+                    val att = (Attachment) conn.getAttachment();
+                    chatService.createChat(att.getNickname(), data);
                     doBroadcast(conn, "chat/public", data);
                 } else {
+                    // Todo: Implement private chat
                     val room = attachment.getInRoom();
                     doBroadcastRoom(conn, "chat/private", data, room);
                 }
@@ -122,16 +130,17 @@ public class OddWebSocket extends WebSocketServer {
     public ServerHandshakeBuilder onWebsocketHandshakeReceivedAsServer(WebSocket conn, Draft draft, ClientHandshake request) throws InvalidDataException {
         ServerHandshakeBuilder builder = super
                 .onWebsocketHandshakeReceivedAsServer(conn, draft, request);
-        val isProd = System.getProperty("isProd");
-        if (isProd == null) {
-            val attachment = Attachment.builder()
-                    .userId("007").nickname("TuHuynh")
-                    .build();
-            conn.setAttachment(attachment);
-            return builder;
-        }
-
         if (!request.hasFieldValue("Cookie")) {
+            val isProd = System.getProperty("isProd");
+            if (isProd == null) {
+                val randomId = ThreadLocalRandom.current().nextInt();
+                val attachment = Attachment.builder()
+                        .userId(String.valueOf(randomId)).nickname("guest" + randomId)
+                        .build();
+                conn.setAttachment(attachment);
+                return builder;
+            }
+
             throw new InvalidDataException(CloseFrame.POLICY_VALIDATION, "Not accepted!");
         }
 
