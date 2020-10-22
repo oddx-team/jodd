@@ -1,11 +1,16 @@
 package io.oddgame.jodd.factories;
 
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jinyframework.core.AbstractRequestBinder.RequestTransformer;
 import com.mongodb.client.MongoDatabase;
 import io.oddgame.jodd.configs.MongoDB;
 import io.oddgame.jodd.utils.Transformer;
 import lombok.Setter;
+import lombok.val;
+
+import com.google.gson.ExclusionStrategy;
 
 @Setter
 public class AppFactory {
@@ -15,7 +20,20 @@ public class AppFactory {
 
     public static Gson getGson() {
         if (gson == null) {
-            gson = new Gson();
+            val strategy = new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().equals("id");
+                }
+
+                @Override
+                public boolean shouldSkipClass(Class<?> clazz) {
+                    return false;
+                }
+            };
+            gson = new GsonBuilder()
+                    .addSerializationExclusionStrategy(strategy)
+                    .create();
         }
         return gson;
     }
