@@ -12,10 +12,8 @@ import io.oddgame.jodd.modules.room.RoomRouter;
 import io.oddgame.jodd.websocket.OddWebSocket;
 import lombok.val;
 
-import java.io.IOException;
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         val server = HttpServer.port(1234)
                 .useTransformer(AppFactory.getRequestTransformer());
         new Thread(OddWebSocket.port(1235)).start();

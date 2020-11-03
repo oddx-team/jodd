@@ -5,7 +5,6 @@ import com.jinyframework.core.AbstractRequestBinder.Context;
 import com.jinyframework.core.AbstractRequestBinder.HttpResponse;
 import io.oddgame.jodd.factories.AppFactory;
 import io.oddgame.jodd.factories.ServiceFactory;
-import lombok.AllArgsConstructor;
 import lombok.val;
 
 public class RoomHandler {
@@ -31,11 +30,5 @@ public class RoomHandler {
         val room = roomService.getRoom(id);
         return room != null ? HttpResponse.of(room) :
                 HttpResponse.of("Room not found").status(404);
-    }
-
-    @AllArgsConstructor
-    private static class CreateRoomRequest {
-        private final String name;
-        private final int size;
     }
 }

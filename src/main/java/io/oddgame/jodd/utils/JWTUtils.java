@@ -17,6 +17,7 @@ public class JWTUtils {
                 .build();
         return verifier.verify(token);
     }
+
     public static String createJWT(String id, String nickname) {
         val secret = Algorithm.HMAC256("secret");
         val expire = Instant.now().plus(1, ChronoUnit.DAYS);

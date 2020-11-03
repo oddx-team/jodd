@@ -8,13 +8,13 @@ public abstract class BaseEntity {
     @SerializedName("_id")
     protected String objectId;
 
+    public ObjectId getId() {
+        return id;
+    }
+
     public void setId(ObjectId id) {
         this.id = id;
         this.objectId = id.toString();
-    }
-
-    public ObjectId getId() {
-        return id;
     }
 
     public String getObjectId() {

@@ -1,5 +1,6 @@
 package io.oddgame.jodd.factories;
 
+import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,8 +10,6 @@ import io.oddgame.jodd.configs.MongoDB;
 import io.oddgame.jodd.utils.Transformer;
 import lombok.Setter;
 import lombok.val;
-
-import com.google.gson.ExclusionStrategy;
 
 @Setter
 public class AppFactory {
