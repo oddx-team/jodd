@@ -2,8 +2,10 @@ package io.oddgame.jodd.websocket;
 
 import com.jinyframework.websocket.WebSocketServer;
 import com.jinyframework.websocket.server.Socket;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
+@Slf4j
 public class OddWebSocketServer {
     public static WebSocketServer port(int port) {
         val server = WebSocketServer.port(port);
@@ -11,11 +13,11 @@ public class OddWebSocketServer {
         server.handshake(WSHandshake::handshake);
 
         server.onOpen(socket ->
-                System.out.println("New connection: " + socket.getIdentify()));
+                log.info("New connection: " + socket.getIdentify()));
         server.onClose((socket, code, reason) ->
-                System.out.println("Closed connection: " + socket.getIdentify() + ", code: " + code + ", reason: " + reason));
+                log.info("Closed connection: " + socket.getIdentify() + ", code: " + code + ", reason: " + reason));
         server.onError((socket, ex) ->
-                System.out.println("Socket error: " + socket.getIdentify() + ", error: " + ex.getMessage()));
+                log.error("Socket error: " + socket.getIdentify() + ", error: " + ex.getMessage(), ex));
 
         server.on("room/join", Socket::join); // Join room
         server.on("room/leave", Socket::leave); // Leave room
