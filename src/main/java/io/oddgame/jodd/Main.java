@@ -15,11 +15,14 @@ import lombok.val;
 public class Main {
     public static void main(String[] args) {
         val server = HttpServer.port(1234)
+                .setThreadDebugMode(true)
                 .useTransformer(AppFactory.getRequestTransformer());
+
         val wsServer = OddWebSocketServer.port(1235);
         new Thread(wsServer::start).start();
 
         server.use(CORSMiddleware::corsMiddleware);
+
         server.get("/", JWTMiddleware::jwtMiddleware, ctx -> HttpResponse.of(ctx.dataParam("nickname")));
         server.use("/auth", AuthenticateRouter.getRouter());
         server.use("/rooms", RoomRouter.getRouter());

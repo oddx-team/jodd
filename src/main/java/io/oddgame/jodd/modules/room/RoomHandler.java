@@ -15,7 +15,7 @@ public class RoomHandler {
         val country = ctx.pathParam("country");
         val createRoomReq = gson.fromJson(ctx.getBody(), Room.class);
         val insertedId = roomService.createRoom(
-                createRoomReq.getName(), country, ctx.dataParam("username"), createRoomReq.getSize());
+                createRoomReq.getName(), country, (String) ctx.dataParam("username"), createRoomReq.getSize());
         return HttpResponse.of("Created room: " + insertedId);
     }
 
