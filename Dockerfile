@@ -44,7 +44,6 @@ RUN native-image --static --no-fallback --libc=musl \
 
 # Run binary file in alpine image
 FROM amd64/alpine:latest
-RUN apk add libc6-compat
 # RUN apk add ca-certificates rsync openssh
 WORKDIR /root/src/binary
 
